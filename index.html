@@ -134,8 +134,16 @@
 
         // --- Definição dos Planos de Aula ---
         const plans = [
-            { id: 'pretas-adultos', title: 'PRETAS ADULTOS', sections: createPlanSections({ Fórmula: ["Individual", "Em dupla com Raquete", "Em dupla com Quebramento"], Quebramento: ["De acordo com a graduação"] }) },
-            { id: 'pretas-teens', title: 'PRETAS TEENS', sections: createPlanSections({ Fórmula: ["Individual", "Em dupla com Raquete", "Em dupla com Quebramento"], Quebramento: ["De acordo com a graduação"] }) },
+            { id: 'pretas-adultos', title: 'PRETAS ADULTOS', sections: createPlanSections({ 
+                Fórmula: ["Individual", "Em dupla com Raquete", "Em dupla com Quebramento"], 
+                Combinação: ["Warrior 1 e 2", "Warrior 3 e 4", "Warrior 5 e 6", "Warrior 7 e 8", "Warrior 9 e 10", "Warrior 1 - 10"],
+                Quebramento: ["De acordo com a graduação"] 
+            }) },
+            { id: 'pretas-teens', title: 'PRETAS TEENS', sections: createPlanSections({ 
+                Fórmula: ["Individual", "Em dupla com Raquete", "Em dupla com Quebramento"], 
+                Combinação: ["Warrior 1 e 2", "Warrior 3 e 4", "Warrior 5 e 6", "Warrior 7 e 8", "Warrior 9 e 10", "Warrior 1 - 10"],
+                Quebramento: ["De acordo com a graduação"] 
+            }) },
             { id: 'n3', title: 'N3 (Faixas Marrom e Vermelha)', sections: createPlanSections({ Quebramento: ["Giro Gancho Saltando"] }) },
             { 
                 id: 'littles-2-4', 
