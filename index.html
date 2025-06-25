@@ -108,17 +108,62 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        
+        // --- Estrutura de Conteúdo Padrão (Mais fácil de editar) ---
+        const standardSections = [
+            {
+                title: "Saltos",
+                items: ["No lugar", "Lateralmente", "Abre e fecha", "Trocando de base"]
+            },
+            {
+                title: "Combinação",
+                items: ["Warrior 1 e 2", "Warrior da graduação"]
+            },
+            {
+                title: "Chutes",
+                items: ["Chute Frontal 1'", "Chute Semicircular 1'", "Chute da graduação 1'"]
+            },
+            {
+                title: "Defesa Pessoal",
+                items: [] // Adicione itens aqui se necessário
+            },
+            {
+                title: "Sparring",
+                items: ["5x de 1 minuto"]
+            },
+            {
+                title: "Quebramento",
+                items: [] // Adicione itens aqui se necessário
+            }
+        ];
+
+        // --- Definição dos Planos de Aula ---
         const plans = [
-            { id: 'pretas-adultos', title: 'PRETAS ADULTOS', content: `<div class="space-y-6"><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Aquecimento Avançado</h3><ul class="space-y-3 pl-2 content-list"><li>Corrida estacionária com elevação de joelhos (5 min)</li><li>Polichinelos e saltos variados (5 min)</li><li>Alongamento dinâmico focado em flexibilidade de quadril e pernas</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Técnicas de Poomsae (Formas)</h3><ul class="space-y-3 pl-2 content-list"><li>Revisão do Poomsae Taebaek</li><li>Estudo e prática do Poomsae Pyongwon</li><li>Correção de posturas e transições</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Combate e Sparring</h3><ul class="space-y-3 pl-2 content-list"><li>Técnicas de contra-ataque com chutes circulares</li><li>Sparring com foco em estratégia e controle de distância</li><li>Simulação de situações de competição</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Finalização</h3><ul class="space-y-3 pl-2 content-list"><li>Quebramento de tábuas com técnicas avançadas (chute gancho, soco giratório)</li><li>Volta à calma e meditação</li></ul></div></div>` },
-            { id: 'pretas-teens', title: 'PRETAS TEENS', content: `<div class="space-y-6"><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Aquecimento e Condicionamento</h3><ul class="space-y-3 pl-2 content-list"><li>Circuito funcional (agachamentos, flexões, prancha)</li><li>Exercícios de agilidade com cones</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Poomsae Superior</h3><ul class="space-y-3 pl-2 content-list"><li>Prática intensiva do Poomsae Koryo</li><li>Introdução ao Poomsae Keumgang</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Técnicas de Luta</h3><ul class="space-y-3 pl-2 content-list"><li>Combinações de chutes e socos em movimento</li><li>Sparring educativo, focando em timing e precisão</li></ul></div></div>` },
-            { id: 'n3', title: 'N3 (Faixas Marrom e Vermelha)', content: `<div class="space-y-6"><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Aquecimento</h3><ul class="space-y-3 pl-2 content-list"><li>Alongamento dinâmico completo</li><li>Exercícios de fortalecimento de core</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Poomsae</h3><ul class="space-y-3 pl-2 content-list"><li>Revisão do Poomsae Taeguk 8 (Pal Jang)</li><li>Introdução e prática do Poomsae Koryo</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Técnicas de Chute</h3><ul class="space-y-3 pl-2 content-list"><li>Chute lateral e chute gancho</li><li>Combinações com saltos</li></ul></div></div>` },
-            { id: 'littles-2-4', title: 'LITTLES 2, 3 E 4 ANOS', content: `<div class="space-y-6"><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Coordenação e Brincadeiras</h3><ul class="space-y-3 pl-2 content-list"><li>Circuito do macaquinho (rolar, engatinhar, pular)</li><li>Estátua musical com posturas de animais</li><li>Pega-pega tartaruga (lento)</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Fundamentos Lúdicos</h3><ul class="space-y-3 pl-2 content-list"><li>Socar almofadas coloridas</li><li>Chutar "bolhas de sabão" imaginárias</li><li>Grito do leão (exercício de kiai/respiração)</li></ul></div></div>` },
-            { id: 'littles-5-7', title: 'LITTLES 5, 6 E 7 ANOS', content: `<div class="space-y-6"><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Saltos e Agilidade</h3><ul class="space-y-3 pl-2 content-list"><li>Pula na maquininha <span class="text-gray-500 font-normal">3x + 10</span></li><li>Pé do gigante <span class="text-gray-500 font-normal">5x</span></li><li>Pé e mão do gigante <span class="text-gray-500 font-normal">3x</span></li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Defesa e Ataque Lúdico</h3><ul class="space-y-3 pl-2 content-list"><li>Defesa do castelo (defesa alta e média)</li><li>Soco do super-herói (soco frontal)</li><li>Chute do foguete (chute frontal)</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Finalização</h3><ul class="space-y-3 pl-2 content-list"><li>Quebramento de "gelo" (placa de isopor)</li></ul></div></div>` },
-            { id: 'n2', title: 'N2 (Faixas Verde, Roxa e Azul)', content: `<div class="space-y-6"><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Aquecimento</h3><ul class="space-y-3 pl-2 content-list"><li>Corrida e polichinelos</li><li>Alongamentos focados</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Poomsae (Formas)</h3><ul class="space-y-3 pl-2 content-list"><li>Revisão de Taeguk 4 e 5</li><li>Prática do Taeguk 6 (Yuk Jang)</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Técnicas</h3><ul class="space-y-3 pl-2 content-list"><li>Chutes com giro (bandal chagui)</li><li>Sequências de defesa pessoal</li><li>Sparring leve com protetores</li></ul></div></div>` },
-            { id: 'brancas-kids', title: 'FAIXAS BRANCAS KIDS', content: `<div class="space-y-6"><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Saltos</h3><ul class="space-y-3 pl-2 content-list"><li>Básicos: 10 no lugar e 4 avançando (começando com a direita)</li><li>Dupla</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Combo</h3><ul class="space-y-3 pl-2 content-list"><li>Combo 1 e 2</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Chutes</h3><ul class="space-y-3 pl-2 content-list"><li>Frontal e Semi: 2 de cada, por 1 minuto</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Finalização</h3><ul class="space-y-3 pl-2 content-list"><li>Defesa Pessoal</li><li>Quebramento</li></ul></div></div>` },
-            { id: 'n1-kids-7-9', title: 'N1 (Laranja, Amarela, Camuflada) KIDS 7 A 9 ANOS', content: `<div class="space-y-6"><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Coordenação e Bases</h3><ul class="space-y-3 pl-2 content-list"><li>Exercícios de equilíbrio em uma perna só</li><li>Prática das bases: Ap Seogui e Ap Kubi</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Poomsae e Técnicas Básicas</h3><ul class="space-y-3 pl-2 content-list"><li>Prática do Taeguk 1 (Il Jang) e Taeguk 2 (Ee Jang)</li><li>Defesa baixa (Arae Makki) e soco (Montong Jireugi)</li></ul></div></div>` },
-            { id: 'n1-kids-10-13', title: 'N1 (Laranja, Amarela, Camuflada) KIDS 10 A 13 ANOS', content: `<div class="space-y-6"><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Aquecimento e Agilidade</h3><ul class="space-y-3 pl-2 content-list"><li>Circuito de agilidade</li><li>Fortalecimento geral</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Poomsae e Combinações</h3><ul class="space-y-3 pl-2 content-list"><li>Prática do Taeguk 2 (Ee Jang) e Taeguk 3 (Sam Jang)</li><li>Combinação: defesa, soco e chute frontal</li></ul></div></div>` },
-            { id: 'brancas-adultos-n1-teens', title: 'BRANCAS ADULTOS E N1 TEENS/ADULTOS', content: `<div class="space-y-6"><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Condicionamento Físico</h3><ul class="space-y-3 pl-2 content-list"><li>Exercícios de aquecimento articular</li><li>Sequências de agachamento e flexões</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Fundamentos Técnicos</h3><ul class="space-y-3 pl-2 content-list"><li>Posturas básicas e deslocamento</li><li>Técnicas de soco e defesa (alta, média, baixa)</li><li>Chute frontal (Ap Chagui)</li></ul></div><div><h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">Introdução à Defesa Pessoal</h3><ul class="space-y-3 pl-2 content-list"><li>Como se soltar de pegadas simples no pulso</li></ul></div></div>` }
+            { id: 'pretas-adultos', title: 'PRETAS ADULTOS', sections: standardSections },
+            { id: 'pretas-teens', title: 'PRETAS TEENS', sections: standardSections },
+            { id: 'n3', title: 'N3 (Faixas Marrom e Vermelha)', sections: standardSections },
+            { 
+                id: 'littles-2-4', 
+                title: 'LITTLES 2, 3 E 4 ANOS', 
+                sections: [
+                    { title: "Coordenação e Brincadeiras", items: ["Circuito do macaquinho (rolar, engatinhar, pular)", "Estátua musical com posturas de animais", "Pega-pega tartaruga (lento)"] },
+                    { title: "Fundamentos Lúdicos", items: ["Socar almofadas coloridas", "Chutar 'bolhas de sabão' imaginárias", "Grito do leão (exercício de kiai/respiração)"] }
+                ] 
+            },
+            { 
+                id: 'littles-5-7', 
+                title: 'LITTLES 5, 6 E 7 ANOS', 
+                sections: [
+                    { title: "Saltos e Agilidade", items: ["Pula na maquininha (3x + 10)", "Pé do gigante (5x)", "Pé e mão do gigante (3x)"] },
+                    { title: "Defesa e Ataque Lúdico", items: ["Defesa do castelo (defesa alta e média)", "Soco do super-herói (soco frontal)", "Chute do foguete (chute frontal)"] },
+                    { title: "Finalização", items: ["Quebramento de 'gelo' (placa de isopor)"] }
+                ]
+            },
+            { id: 'n2', title: 'N2 (Faixas Verde, Roxa e Azul)', sections: standardSections },
+            { id: 'brancas-kids', title: 'FAIXAS BRANCAS KIDS', sections: standardSections },
+            { id: 'n1-kids-7-9', title: 'N1 (Laranja, Amarela, Camuflada) KIDS 7 A 9 ANOS', sections: standardSections },
+            { id: 'n1-kids-10-13', title: 'N1 (Laranja, Amarela, Camuflada) KIDS 10 A 13 ANOS', sections: standardSections },
+            { id: 'brancas-adultos-n1-teens', title: 'BRANCAS ADULTOS E N1 TEENS/ADULTOS', sections: standardSections }
         ];
 
         // --- Elementos do DOM ---
@@ -158,8 +203,23 @@
             selectionScreen.classList.remove('hidden');
         };
 
+        const generatePlanHTML = (sections) => {
+            let html = '<div class="space-y-6">';
+            sections.forEach(section => {
+                html += `
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">${section.title}</h3>
+                        <ul class="space-y-3 pl-2 content-list">
+                            ${section.items.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            return html;
+        };
+
         // --- Geração Dinâmica ---
-        // Adiciona link "Início" ao menu
         const homeLink = document.createElement('a');
         homeLink.href = '#';
         homeLink.id = 'home-link';
@@ -170,7 +230,6 @@
         plans.forEach((plan, index) => {
             const currentColor = index % 2 === 0 ? color1 : color2;
             
-            // Cria botão na tela de seleção
             const button = document.createElement('button');
             button.className = 'w-full text-white font-bold py-4 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 selection-btn';
             button.style.backgroundColor = currentColor;
@@ -179,7 +238,6 @@
             button.addEventListener('click', () => showPlan(plan.id));
             selectionGrid.appendChild(button);
 
-            // Cria item no menu lateral
             const menuItem = document.createElement('a');
             menuItem.href = '#';
             menuItem.className = 'menu-item block py-2.5 px-4 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100';
@@ -191,7 +249,6 @@
             });
             planMenuNav.appendChild(menuItem);
 
-            // Cria o container do plano (escondido)
             const planDiv = document.createElement('div');
             planDiv.id = `plan-${plan.id}`;
             planDiv.className = 'plan-container hidden bg-white rounded-xl shadow-lg p-6';
@@ -202,7 +259,7 @@
                     </div>
                     <h2 class="text-2xl font-bold text-gray-800">${plan.title}</h2>
                 </div>
-                ${plan.content}
+                ${generatePlanHTML(plan.sections)}
                 <footer class="mt-8 pt-6 border-t border-gray-200 text-center">
                     <button class="back-to-home-btn text-sm font-medium text-indigo-600 hover:text-indigo-800">← Voltar para o Início</button>
                 </footer>
