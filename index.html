@@ -109,39 +109,34 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         
-        // --- Estrutura de Conteúdo Padrão (Mais fácil de editar) ---
-        const standardSections = [
-            {
-                title: "Saltos",
-                items: ["No lugar", "Lateralmente", "Abre e fecha", "Trocando de base"]
-            },
-            {
-                title: "Combinação",
-                items: ["Warrior 1 e 2", "Warrior da graduação"]
-            },
-            {
-                title: "Chutes",
-                items: ["Chute Frontal 1'", "Chute Semicircular 1'", "Chute da graduação 1'"]
-            },
-            {
-                title: "Defesa Pessoal",
-                items: [] // Adicione itens aqui se necessário
-            },
-            {
-                title: "Sparring",
-                items: ["5x de 1 minuto"]
-            },
-            {
-                title: "Quebramento",
-                items: [] // Adicione itens aqui se necessário
+        // --- Função para gerar conteúdo do plano com personalizações ---
+        const createPlanSections = (overrides = {}) => {
+            // Cria uma cópia profunda do template padrão para evitar modificações indesejadas
+            const standardSections = JSON.parse(JSON.stringify([
+                { title: "Saltos", items: ["No lugar", "Lateralmente", "Abre e fecha", "Trocando de base"] },
+                { title: "Fórmula", items: [] },
+                { title: "Combinação", items: ["Warrior 1 e 2", "Warrior da graduação"] },
+                { title: "Chutes", items: ["Chute Frontal 1'", "Chute Semicircular 1'", "Chute da graduação 1'"] },
+                { title: "Defesa Pessoal", items: [] },
+                { title: "Sparring", items: ["5x de 1 minuto"] },
+                { title: "Quebramento", items: [] } // Padrão vazio
+            ]));
+
+            // Aplica as personalizações (overrides)
+            for (const sectionTitle in overrides) {
+                const section = standardSections.find(s => s.title === sectionTitle);
+                if (section) {
+                    section.items = overrides[sectionTitle];
+                }
             }
-        ];
+            return standardSections;
+        };
 
         // --- Definição dos Planos de Aula ---
         const plans = [
-            { id: 'pretas-adultos', title: 'PRETAS ADULTOS', sections: standardSections },
-            { id: 'pretas-teens', title: 'PRETAS TEENS', sections: standardSections },
-            { id: 'n3', title: 'N3 (Faixas Marrom e Vermelha)', sections: standardSections },
+            { id: 'pretas-adultos', title: 'PRETAS ADULTOS', sections: createPlanSections({ Fórmula: ["Individual", "Em dupla com Raquete", "Em dupla com Quebramento"], Quebramento: ["De acordo com a graduação"] }) },
+            { id: 'pretas-teens', title: 'PRETAS TEENS', sections: createPlanSections({ Fórmula: ["Individual", "Em dupla com Raquete", "Em dupla com Quebramento"], Quebramento: ["De acordo com a graduação"] }) },
+            { id: 'n3', title: 'N3 (Faixas Marrom e Vermelha)', sections: createPlanSections({ Quebramento: ["Giro Gancho Saltando"] }) },
             { 
                 id: 'littles-2-4', 
                 title: 'LITTLES 2, 3 E 4 ANOS', 
@@ -159,11 +154,11 @@
                     { title: "Finalização", items: ["Quebramento de 'gelo' (placa de isopor)"] }
                 ]
             },
-            { id: 'n2', title: 'N2 (Faixas Verde, Roxa e Azul)', sections: standardSections },
-            { id: 'brancas-kids', title: 'FAIXAS BRANCAS KIDS', sections: standardSections },
-            { id: 'n1-kids-7-9', title: 'N1 (Laranja, Amarela, Camuflada) KIDS 7 A 9 ANOS', sections: standardSections },
-            { id: 'n1-kids-10-13', title: 'N1 (Laranja, Amarela, Camuflada) KIDS 10 A 13 ANOS', sections: standardSections },
-            { id: 'brancas-adultos-n1-teens', title: 'BRANCAS ADULTOS E N1 TEENS/ADULTOS', sections: standardSections }
+            { id: 'n2', title: 'N2 (Faixas Verde, Roxa e Azul)', sections: createPlanSections({ Quebramento: ["Giro Gancho"] }) },
+            { id: 'brancas-kids', title: 'FAIXAS BRANCAS KIDS', sections: createPlanSections({ Quebramento: ["Chute Frontal ou Golpe de Palma de Mão"] }) },
+            { id: 'n1-kids-7-9', title: 'N1 (Laranja, Amarela, Camuflada) KIDS 7 A 9 ANOS', sections: createPlanSections({ Quebramento: ["Chute Lateral"] }) },
+            { id: 'n1-kids-10-13', title: 'N1 (Laranja, Amarela, Camuflada) KIDS 10 A 13 ANOS', sections: createPlanSections({ Quebramento: ["Chute Lateral"] }) },
+            { id: 'brancas-adultos-n1-teens', title: 'BRANCAS ADULTOS E N1 TEENS/ADULTOS', sections: createPlanSections({ Quebramento: ["Chute Frontal ou Golpe de Palma de Mão", "Chute Lateral"] }) }
         ];
 
         // --- Elementos do DOM ---
@@ -209,9 +204,7 @@
                 html += `
                     <div>
                         <h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">${section.title}</h3>
-                        <ul class="space-y-3 pl-2 content-list">
-                            ${section.items.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
+                        ${section.items.length > 0 ? `<ul class="space-y-3 pl-2 content-list">${section.items.map(item => `<li>${item}</li>`).join('')}</ul>` : ''}
                     </div>
                 `;
             });
