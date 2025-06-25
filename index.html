@@ -59,9 +59,11 @@
                         </svg>
                     </button>
                 </div>
-                <!-- Título (agora Logo) -->
+                <!-- Título (agora Logo clicável) -->
                 <div class="flex items-center">
-                    <img src="https://kihap.com.br/wp-content/uploads/2021/02/kihap-wh-1536x359.png" alt="Logo Kihap" class="h-8 w-auto">
+                    <a href="#" id="logo-link" aria-label="Voltar para o Início">
+                        <img src="https://kihap.com.br/wp-content/uploads/2021/02/kihap-wh-1536x359.png" alt="Logo Kihap" class="h-8 w-auto">
+                    </a>
                 </div>
                 <!-- Espaçador para centralizar o título (opcional) -->
                 <div class="w-8"></div>
@@ -120,6 +122,7 @@
         ];
 
         // --- Elementos do DOM ---
+        const logoLink = document.getElementById('logo-link');
         const selectionScreen = document.getElementById('selection-screen');
         const selectionGrid = document.getElementById('selection-grid');
         const plansContainer = document.getElementById('plans-container');
@@ -200,6 +203,9 @@
                     <h2 class="text-2xl font-bold text-gray-800">${plan.title}</h2>
                 </div>
                 ${plan.content}
+                <footer class="mt-8 pt-6 border-t border-gray-200 text-center">
+                    <button class="back-to-home-btn text-sm font-medium text-indigo-600 hover:text-indigo-800">← Voltar para o Início</button>
+                </footer>
             `;
             plansContainer.appendChild(planDiv);
         });
@@ -208,10 +214,23 @@
         menuBtn.addEventListener('click', toggleMenu);
         closeBtn.addEventListener('click', toggleMenu);
         sidebarOverlay.addEventListener('click', toggleMenu);
+        
         homeLink.addEventListener('click', (e) => {
             e.preventDefault();
             showSelectionScreen();
             toggleMenu();
+        });
+
+        logoLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSelectionScreen();
+        });
+
+        plansContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('back-to-home-btn')) {
+                e.preventDefault();
+                showSelectionScreen();
+            }
         });
     });
     </script>
